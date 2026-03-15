@@ -29,7 +29,7 @@ const InterestForm = ({ steps, onClose }) => {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL || ''
-      const response = await axios.post(`${apiUrl}api/interest`, formData)
+      const response = await axios.post(`${apiUrl}/api/interest`, formData)
       
       if (response.data.success) {
         setSuccess(true)
@@ -40,7 +40,7 @@ const InterestForm = ({ steps, onClose }) => {
         }, 2000)
       }
     } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong. Please try again.')
+      setError(err.response?.data?.message || 'Something went wrong')
     } finally {
       setLoading(false)
     }

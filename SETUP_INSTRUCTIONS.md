@@ -78,8 +78,11 @@ DB_PORT=5432
 DB_NAME=sniperthink
 DB_USER=postgres
 DB_PASSWORD=your_postgres_password
+# Redis Configuration (Local)
 REDIS_HOST=localhost
 REDIS_PORT=6379
+# REDIS_PASSWORD= (leave empty if local Redis has no password)
+
 UPLOAD_DIR=./uploads
 ```
 

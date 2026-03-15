@@ -22,50 +22,35 @@ const InteractiveStrategyFlow = () => {
   useEffect(() => {
     const unsubscribe = progress.on('change', (latest) => {
       setScrollProgress(latest)
-      // Update active step based on scroll progress
       const stepIndex = Math.floor((latest / 100) * strategySteps.length)
       setActiveStep(Math.min(stepIndex, strategySteps.length - 1))
     })
-    return () => unsubscribe()
+    return unsubscribe
   }, [progress])
 
   const handleStepClick = (index) => {
     setActiveStep(index)
     const stepElement = document.getElementById(`step-${index}`)
-    if (stepElement) {
-      // Wait for state update and DOM reflow
-      setTimeout(() => {
-        // Get header height (sticky header at top)
-        const header = document.querySelector('.app-header')
-        const headerHeight = header ? header.getBoundingClientRect().height : 0
-        
-        // Get the progress indicator element and its actual height
-        const progressIndicator = document.querySelector('.progress-indicator-container')
-        const progressIndicatorHeight = progressIndicator ? progressIndicator.getBoundingClientRect().height : 150
-        
-        // Calculate total sticky height (header + progress indicator)
-        const stickyHeight = headerHeight + progressIndicatorHeight
-        
-        // Get element's position relative to document
-        const elementRect = stepElement.getBoundingClientRect()
-        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop
-        const elementTop = elementRect.top + currentScrollY
-        
-        // Subtract less to position card higher (closer to progress indicator)
-        // Adjust this value to control how high the card appears (smaller = higher)
-        const offsetAdjustment = 50 // Reduce this to make card appear higher
-        
-        // Calculate scroll position so card appears higher up
-        // This positions the card closer to the progress indicator
-        const targetScrollPosition = elementTop - stickyHeight + offsetAdjustment
-        
-        // Smooth scroll to position
-        window.scrollTo({
-          top: Math.max(0, targetScrollPosition),
-          behavior: 'smooth'
-        })
-      }, 100)
-    }
+    if (!stepElement) return
+
+    setTimeout(() => {
+      const header = document.querySelector('.app-header')
+      const progressIndicator = document.querySelector('.progress-indicator-container')
+      const headerHeight = header?.getBoundingClientRect().height || 0
+      const progressIndicatorHeight = progressIndicator?.getBoundingClientRect().height || 150
+      const stickyHeight = headerHeight + progressIndicatorHeight
+      
+      const elementRect = stepElement.getBoundingClientRect()
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop
+      const elementTop = elementRect.top + currentScrollY
+      const offsetAdjustment = 50
+      const targetScrollPosition = elementTop - stickyHeight + offsetAdjustment
+      
+      window.scrollTo({
+        top: Math.max(0, targetScrollPosition),
+        behavior: 'smooth'
+      })
+    }, 100)
   }
 
   return (
@@ -87,7 +72,7 @@ const InteractiveStrategyFlow = () => {
         </motion.p>
       </div>
 
-      {strategySteps && strategySteps.length > 0 ? (
+      {strategySteps.length > 0 && (
         <>
           <ProgressIndicator 
             steps={strategySteps} 
@@ -95,7 +80,6 @@ const InteractiveStrategyFlow = () => {
             scrollProgress={scrollProgress}
             onStepClick={handleStepClick}
           />
-
           <div className="steps-container">
             {strategySteps.map((step, index) => (
               <StrategyStep
@@ -109,8 +93,6 @@ const InteractiveStrategyFlow = () => {
             ))}
           </div>
         </>
-      ) : (
-        <div style={{ color: 'white', padding: '20px' }}>No steps available</div>
       )}
 
       {showForm && (
