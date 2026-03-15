@@ -28,7 +28,8 @@ const InterestForm = ({ steps, onClose }) => {
     setLoading(true)
 
     try {
-      const response = await axios.post('/api/interest', formData)
+      const apiUrl = import.meta.env.VITE_API_URL || ''
+      const response = await axios.post(`${apiUrl}/api/interest`, formData)
       
       if (response.data.success) {
         setSuccess(true)

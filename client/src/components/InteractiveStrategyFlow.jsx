@@ -35,32 +35,33 @@ const InteractiveStrategyFlow = () => {
     if (stepElement) {
       // Wait for state update and DOM reflow
       setTimeout(() => {
-        // Get header height to hide it when scrolling
+        // Get header height (sticky header at top)
         const header = document.querySelector('.app-header')
-        const headerHeight = header ? header.offsetHeight : 0
+        const headerHeight = header ? header.getBoundingClientRect().height : 0
         
-        // Get the progress indicator element to calculate its actual height
+        // Get the progress indicator element and its actual height
         const progressIndicator = document.querySelector('.progress-indicator-container')
-        const progressIndicatorHeight = progressIndicator ? progressIndicator.offsetHeight : 150
+        const progressIndicatorHeight = progressIndicator ? progressIndicator.getBoundingClientRect().height : 150
         
-        // Get current scroll position and element position
-        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop
+        // Calculate total sticky height (header + progress indicator)
+        const stickyHeight = headerHeight + progressIndicatorHeight
+        
+        // Get element's position relative to document
         const elementRect = stepElement.getBoundingClientRect()
+        const currentScrollY = window.pageYOffset || document.documentElement.scrollTop
         const elementTop = elementRect.top + currentScrollY
         
-        // Reduced offset to bring cards up - less spacing below progress indicator
-        const spacingOffset = 20 // Reduced from larger values
+        // Subtract less to position card higher (closer to progress indicator)
+        // Adjust this value to control how high the card appears (smaller = higher)
+        const offsetAdjustment = 50 // Reduce this to make card appear higher
         
-        // Special handling for green card (step 4 - index 3) - still needs a bit more
-        const extraOffset = index === 3 ? 30 : 0
-        
-        // Calculate offset: header height + progress indicator height + minimal spacing
-        // This positions cards higher up while still keeping them visible
-        const offsetPosition = elementTop - headerHeight - progressIndicatorHeight - spacingOffset - extraOffset
+        // Calculate scroll position so card appears higher up
+        // This positions the card closer to the progress indicator
+        const targetScrollPosition = elementTop - stickyHeight + offsetAdjustment
         
         // Smooth scroll to position
         window.scrollTo({
-          top: Math.max(0, offsetPosition),
+          top: Math.max(0, targetScrollPosition),
           behavior: 'smooth'
         })
       }, 100)
