@@ -8,6 +8,7 @@ const fs = require('fs')
 const interestRoutes = require('./routes/interest')
 const fileRoutes = require('./routes/files')
 const jobRoutes = require('./routes/jobs')
+const migrateRoutes = require('./routes/migrate')
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -27,6 +28,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use('/api/interest', interestRoutes)
 app.use('/api/files', fileRoutes)
 app.use('/api/jobs', jobRoutes)
+app.use('/api', migrateRoutes) // Migration endpoint
 
 // Health check
 app.get('/health', (req, res) => {
