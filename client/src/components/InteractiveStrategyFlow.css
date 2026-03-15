@@ -1,0 +1,58 @@
+.strategy-flow-container {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  position: relative;
+  background-color: #0a0a0a;
+  color: #ffffff;
+}
+
+.strategy-flow-header {
+  text-align: center;
+  margin-bottom: 1rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1rem;
+}
+
+.strategy-flow-header h2 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.strategy-flow-header p {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.steps-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+  padding-top: 3rem; /* Increased padding to ensure cards aren't too close to progress indicator */
+  scroll-margin-top: 280px; /* Add scroll margin for better positioning */
+}
+
+@media (max-width: 768px) {
+  .strategy-flow-container {
+    padding: 2rem 1rem;
+  }
+
+  .strategy-flow-header h2 {
+    font-size: 2rem;
+  }
+
+  .strategy-flow-header p {
+    font-size: 1rem;
+  }
+
+  .steps-container {
+    gap: 4rem;
+  }
+}

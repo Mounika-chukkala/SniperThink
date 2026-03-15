@@ -1,0 +1,27 @@
+{
+  "name": "sniperthink-server",
+  "version": "1.0.0",
+  "description": "Backend server for SniperThink file processing system",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "worker": "node workers/fileProcessor.js",
+    "create-db": "node database/createDb.js",
+    "migrate": "node database/migrate.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "multer": "^1.4.5-lts.1",
+    "pg": "^8.11.3",
+    "ioredis": "^5.3.2",
+    "bullmq": "^5.3.0",
+    "pdf-parse": "^1.1.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
